@@ -13,10 +13,10 @@ Vesta Realty | Rent Info
         <div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKK6xibIHpmaTKm8ZGO5HtVbLYzKYs-C7YZQ&s" alt="Blank User"
             class="w-fit md:w-40 aspect-square rounded-full shadow-lg">
-           <div class="flex md:flex-row space-x-2 mt-4">
+           <div class="flex items-start md:flex-row space-x-2 mt-4">
                 <div class="flex space-x-2">
                     <span class="font-bold">Name:</span>
-                    <span>John Smith</span>
+                    <span class="text-sm">John Smith</span>
                 </div>
                 <div class="flex space-x-2">
                     <span class="font-bold">Location:</span>
@@ -64,17 +64,18 @@ Vesta Realty | Rent Info
                     </div>
                     <div class="flex flex-col  space-y-1">
                         <label for="amount" class="font-semibold">Amount Paid:</label>
-                        <div class="relative">
-                            <input type="text" class="relative w-full rounded-md border border-gray-200 px-2 py-1" name="amount"> 
+                        <div class="flex border border-gray-200 rounded-md space-x-1 items-center">
+                             
                             <!-- Minus sign -->
-                            <div class="absolute left-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer" title="-1000">
+                            <div class="hover:cursor-pointer bg-gray-200 h-full p-1" title="-1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                 </svg>
                             </div>
-                        
+                            <!-- Input -->
+                            <input type="text" class="w-full focus:ring-1 focus:ring-gray-400 px-2 py-1" name="amount">
                             <!-- Plus sign -->
-                            <div class="absolute right-2 top-1/2 transform -translate-y-1/2 hover:cursor-pointer" title="+1000">
+                            <div class="hover:cursor-pointer bg-gray-200 h-full p-1" title="+1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
@@ -83,7 +84,7 @@ Vesta Realty | Rent Info
                     </div>
                     <div class="flex flex-col space-y-1 flex-grow">
                         <label for="mpesa" class="font-semibold ">Mpesa code:</label>
-                        <input type="text" name="mpesa" class="rounded-md border border-gray-200 px-10 py-1" placeholder="optional">
+                        <input type="text" name="mpesa" class="rounded-md border border-gray-200 px-2 py-1" placeholder="optional">
                         
                     </div>
                 </div>

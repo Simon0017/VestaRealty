@@ -13,4 +13,7 @@ urlpatterns = [
     path('forgot_password',views.user_reset_password,name='forgot_password'),
     path('rent_info',views.update_rent_info,name='rent_info'),
     path('view_tenant',views.tenant_info,name='view_tenant'),
+    path('create_property',views.create_property,name='create_property'),
+    path('view_properties',views.view_properties,name='view_properties'),
+    path('view_invoice',views.view_invoice,name='view_invoice'),
 ]

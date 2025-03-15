@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vesta Realty | Login</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/faviconn_2.png' %}" type="image/x-icon">
  </head>
  <body>
     <div class="bg-gray-100 min-h-screen flex items-center justify-center">
@@ -14,6 +15,41 @@
         <div class="absolute inset-0 z-0">
             <img src="https://images.pexels.com/photos/1797393/pexels-photo-1797393.jpeg" alt=""
                 class="w-full h-full object-cover filter blur-md brightness-50">
+        </div>
+
+        <div class="fixed top-4 right-4 max-w-xs w-full bg-green-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;" id="success_message">
+            <!-- Başarılı İkon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8.5 8.5a1 1 0 01-1.414 0l-4.5-4.5a1 1 0 011.414-1.414L8 12.086l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+
+            <!-- Toast Mesajı -->
+            <div class="flex-1">
+                <p class="font-bold">Success</p>
+                <p class="text-sm">Login is  successful!</p>
+            </div>
+
+            <!-- Kapatma Butonu -->
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="fixed top-4 right-4 max-w-xs w-full bg-red-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;" id="error_message">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.976-.446 1.342 0l6 7.5a1 1 0 01-.671 1.601H3.07a1 1 0 01-.671-1.601l6-7.5zM10 13a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd" />
+            </svg>
+            <div class="flex-1">
+                <p class="font-bold">Error</p>
+                <p class="text-sm">An error occurred. Please try again.</p>
+            </div>
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
         </div>
     
         <!-- Login Form -->
@@ -24,23 +60,24 @@
                   </svg>  
             </a>
             <h1 class="text-xl font-bold mb-4">Login</h1>
-            <form action="#" method="POST">
+            <form action="" method="POST" id="form">
+            {% csrf_token %}
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2" for="email">Username</label>
+                    <label class="block text-gray-700 font-bold mb-2" for="username">Username</label>
                     <input
                         class="appearance-none border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
-                        id="email" type="email" placeholder="username">
+                        id="username" type="text" placeholder="username" name="username">
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 font-bold mb-2" for="password">Password</label>
                     <input
                         class="appearance-none border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
-                        id="password" type="password" placeholder="Password">
+                        id="password" type="password" placeholder="Password" name="password">
                 </div>
                 <div class="flex items-center justify-between gap-8">
                     <button
                         class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="button">
+                        type="submit">
                         Sign In
                     </button>
                     <a class="inline-block align-baseline font-bold text-sm text-cyan-500 hover:text-cyan-800"
@@ -54,5 +91,8 @@
             </form>
         </div>
     </div>
+    <!-- Js scripts -->
+    <script src="{% static 'js/login.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  </body>
  </html>
