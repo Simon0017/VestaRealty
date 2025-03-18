@@ -11,6 +11,36 @@ Vesta Realty | View Properties
 
 {% block content %}
 
+    <div class="shadow-lg rounded-lg  overflow-x-auto mx-4 md:mx-10 mt-6">
+        <table class="w-full table-auto">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">No</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Name</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Location</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Tenants</th>
+                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase ">Status</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for property in properties %}
+                    <tr>
+                        <td class="py-4 px-6 "> {{forloop.counter}} </td>
+                        <td class="py-4 px-6 truncate overflow-hidden whitespace-nowrap text-ellipsis"> {{property.name}} </td>
+                        <td class="py-4 px-6  truncate overflow-hidden whitespace-nowrap text-ellipsis">{{property.location}} </td>
+                        <td class="py-4 px-6 "> 
+                            <span class="bg-green-600 rounded-full text-xs md:text-sm max-w-ws truncate  text-white px-3 py-1">
+                                {{property.tenants}} Tenants
+                            </span>
+                        </td>
+                        <td class="py-4 px-1 truncate overflow-hidden whitespace-nowrap text-ellipsis max-w-6" title="{{property.notes}}">
+                            {{property.notes}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     
 
 {% endblock content %}

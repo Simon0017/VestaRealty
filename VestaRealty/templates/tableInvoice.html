@@ -1,0 +1,71 @@
+<!-- This template is for viewign the landlord's entire estate records -->
+{% extends "base.html" %}
+{% load static  %}
+
+{% block title %}
+ Vesta Realty | Tenants Invoice 
+{% endblock title %}
+
+{% block content %}
+
+    <div class="p-4">
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h2 class="text-2xl font-bold mb-4">Tenants Invoice</h2>
+            <div class="overflow-x-auto">
+                <table id="example" class="table-auto w-full stripe order-column row-border display">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Month</th>
+                            <th class="px-4 py-2">Rent</th>
+                            <th class="px-4 py-2">Water Bill</th>
+                            <th class="px-4 py-2">Electricity</th>
+                            <th class="px-4 py-2">Bal c/d</th>
+                            <th class="px-4 py-2">Total</th>
+                            <th class="px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for invoice in invoices %}
+                            <tr>
+                                <td class="border px-4 py-2">{{invoice.tenant}} </td>
+                                <td class="border px-4 py-2">{{invoice.month}}</td>
+                                <td class="border px-4 py-2">Ksh: {{invoice.rent}} </td>
+                                <td class="border px-4 py-2">Ksh: {{invoice.water_bills}}</td>
+                                <td class="border px-4 py-2">Ksh: {{invoice.electricity_bills}}</td>
+                                <td class="border px-4 py-2">Ksh: {{invoice.balance_carried_down}}</td>
+                                <td class="border px-4 py-2">Ksh: {{invoice.total}}.00</td>
+                                <td class="border px-4 py-2">
+                                <div class="flex justify-center">
+                                    <a href="{% url 'view_invoice' invoice.id %}" class="hover:text-cyan-500"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                    </a>
+                                </div>
+                                </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.tailwindcss.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                // Add any customization options here
+            });
+        });
+    </script>
+
+{% endblock content %}

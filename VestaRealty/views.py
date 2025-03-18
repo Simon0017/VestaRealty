@@ -17,6 +17,13 @@ from datetime import timedelta
 def base_view(request):
     return render(request, 'base.html')
 
+# view for the homepage
+def homepage(request):
+    if request.user is not None:
+        return redirect('dashboard')
+    else:
+        return redirect('user_login')
+
 # view for user login
 def user_login(request):
     if request.method == 'POST':
@@ -120,12 +127,40 @@ def create_tenant(request):
     return render(request,'createTenant.html',context)
 
 # view to update rent information ie rent paid
-def update_rent_info(request):
-    return render(request,'updateRecords.html')
+def update_rent_info(request,tenant_id):
+    #get tenant info
+    tenant = Tenant.objects.get(id = tenant_id)
+    
+    context = {
+        'tenant': tenant,
+    }
+
+    return render(request,'updateRecords.html',context)
 
 # view to view tenant info plus the rental records
 def tenant_info(request):
-    return render(request,'viewTenant.html')
+    landlord = request.user
+
+    # get landlord's tenants
+    tenants = list(landlord.tenants.all())
+    modified_tenants = []
+
+    for tenant in tenants:
+        property = tenant.property_owned_set.all().values_list('name',flat  = True)
+        property = property[0]
+        modified_tenants.append({
+            'name': tenant.name,
+            'property': property,
+            'id_no': tenant.id_no,
+            'Rent': tenant.Rent,
+            'id': tenant.id,
+        })
+    
+    context = {
+        'tenants': modified_tenants,
+    }
+
+    return render(request,'viewTenant.html',context)
 
 
 # view to create a new property
@@ -166,8 +201,124 @@ def create_property(request):
 
 # view to view the properties
 def view_properties(request):
-    return render(request,'viewProperties.html')
+    # get the landlord
+    landlord = request.user
+
+    # get the properties
+    properties = list(landlord.owner.all())
+
+    modified_property  = []
+    for property in properties:
+        tenants = list(property.tenants.all().values_list('name', flat=True))
+        modified_property.append({
+            'name': property.name,
+            'location': property.location,
+            'tenants': len(tenants),
+            'notes': property.notes,
+        })
+        
+
+    context = {
+        'properties': modified_property,
+    }
+
+    return render(request,'viewProperties.html',context)
 
 # view for the invoice viewing and download the pdf copy
-def view_invoice(request):
-    return render(request,'invoice.html')
+def view_invoice(request,invoice_id):
+    # retrieve the invoice data
+    invoice_data = invoices.objects.get(id = invoice_id)
+
+    context = {
+            'landlord':request.user.username,
+            'email':request.user.email,
+            'id':invoice_data.id,
+            'tenant':invoice_data.tenant.name,
+            'water_bills':invoice_data.water_bills,
+            'electricity_bills':invoice_data.electricity_bills,
+            'balance_carried_down':invoice_data.balance_carried_down,
+            'rent':invoice_data.rent,
+            'month':invoice_data.month,
+            'total': int(invoice_data.rent) + int(invoice_data.water_bills) + int(invoice_data.electricity_bills),
+            
+        }
+
+    return render(request,'invoice.html',context)
+
+# view for table invoices
+def view_table_invoice(request):
+    # get all the landlords invoice
+    invoices_ = list(request.user.landlord_invoice.all())
+
+    # modify invoices
+    mod_invoices =[]
+    for invoice in invoices_:
+        mod_invoices.append({
+            'id':invoice.id,
+            'tenant':invoice.tenant.name,
+            'water_bills':invoice.water_bills,
+            'electricity_bills':invoice.electricity_bills,
+            'balance_carried_down':invoice.balance_carried_down,
+            'rent':invoice.rent,
+            'month':invoice.month,
+            'total': int(invoice.rent) + int(invoice.water_bills) + int(invoice.electricity_bills),
+            
+        })
+
+    context = {
+        'invoices': mod_invoices,
+    }
+    return render(request,'tableInvoice.html',context)
+
+# view to create the invoices
+def create_invoice(request):
+    # get the landlords tenants
+    landlord = request.user
+    tenants = list(landlord.tenants.all())
+    if request.method == 'POST':
+        customer = request.POST['Customer']
+        water = request.POST['water']
+        Electricity = request.POST['Electricity']
+        month = request.POST['month']
+
+        try:
+            # get the user instance
+            tenant = Tenant.objects.get(name  = customer)
+            data = invoices(
+                landlord = landlord,
+                tenant = tenant,
+                rent = tenant.Rent,
+                water_bills = water,
+                electricity_bills = Electricity,
+                month = month,
+            )
+
+            data.save()
+            return JsonResponse({
+                'status': 'success',
+            })
+        
+        except Exception as e:
+            print(e)
+            return JsonResponse({
+                'status': 'error',
+            })
+        
+    
+    
+    context = {
+        'tenants': tenants,
+    }
+    return render(request,'create_invoice.html',context)
+
+# view to get the rent
+@csrf_exempt
+def get_rent(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        tenant = Tenant.objects.get(name = data['customer'])
+    return JsonResponse({
+        'status': 'success',
+        'Rent': tenant.Rent,
+
+    })

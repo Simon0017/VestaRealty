@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static  %}
+
+{% block title %}
+Vesta Realty | Create Invoice
+{% endblock title %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="flex h-screen w-full items-center justify-center bg-gray-600">
+
+        <!-- Toast notifications -->
+
+        <div class="fixed top-12 right-4 max-w-xs w-full bg-green-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;"  id="success_message">
+            <!-- Başarılı İkon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8.5 8.5a1 1 0 01-1.414 0l-4.5-4.5a1 1 0 011.414-1.414L8 12.086l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+
+            <!-- Toast Mesajı -->
+            <div class="flex-1">
+                <p class="font-bold">Success</p>
+                <p class="text-sm">Creation successful!</p>
+            </div>
+
+            <!-- Kapatma Butonu -->
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="fixed top-12 right-4 max-w-xs w-full bg-red-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;" id="error_message">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.976-.446 1.342 0l6 7.5a1 1 0 01-.671 1.601H3.07a1 1 0 01-.671-1.601l6-7.5zM10 13a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd" />
+            </svg>
+            <div class="flex-1">
+                <p class="font-bold">Error</p>
+                <p class="text-sm">An error occurred. Please try again.</p>
+            </div>
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+        <form action="" id="form">
+        {% csrf_token %}
+            <div class="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg" id="invoice">
+                <img src="https://images.pexels.com/photos/1481105/pexels-photo-1481105.jpeg" alt="chippz" class="mx-auto w-16 rounded-md shadow-md" />
+                <div class="flex flex-col justify-center items-center gap-2">
+                    <h4 class="font-semibold">Martin Estate</h4>
+                    <p class="text-xs">martinwafula@gmail.com</p>
+                </div>
+                <div class="flex flex-col gap-3  py-6 text-xs">
+                    <p class="flex justify-between">
+                        <label for="Customer" class="text-gray-400">Tenant:</label>
+                        <select name="Customer" id="Customer" class="w-1/2 p-1 bg-gray-200 rounded-md " >
+                            {% for tenant in tenants %}
+                                <option value="{{tenant.name}}">{{tenant.name}} </option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <p class="flex justify-between">
+                        <label for="month" class="text-gray-400">month:</label>
+                        <input type="month" value="2025-03" name="month" id="month" class="w-1/2 p-1 bg-gray-200 rounded-md ">
+                    </p>
+                    <p class="flex justify-between">
+                        <span class="text-gray-400">Rent:</span>
+                        <span id="rent">Ksh 25000.00</span>
+                    </p>
+                    <p class="flex justify-between">
+                        <label for="water" class="text-gray-400">Water Bill:</label>
+                        <input type="number" name="water" id="water" class="w-1/2 p-1 bg-gray-200 rounded-md ">
+                    </p>
+                    <p class="flex justify-between">
+                        <label for="Electricity" class="text-gray-400">Electricity Bill:</label>
+                        <input type="number" name="Electricity" id="Electricity" class="w-1/2 p-1 bg-gray-200 rounded-md ">
+                    </p>
+                    
+                </div>
+
+                <!-- <div class="flex flex-col gap-3 pb-6 pt-2 text-xs">
+                    <table class="w-full text-left">
+                        <caption class="font-semibold">Additional Expenses</caption>
+                        <thead>
+                        <tr class="flex">
+                            <th class="w-full py-2">Expense</th>
+                            <th class="min-w-[44px] py-2">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="flex">
+                            <td class="flex-1 py-1">Repairs</td>
+                            <td class="min-w-[44px]">Ksh 500.00</td>
+                        </tr>
+                        <tr class="flex py-1">
+                            <td class="flex-1">Garbage Disposal</td>
+                            <td class="min-w-[44px]">Ksh 100.00</td>
+                        </tr>
+                        <tr class="flex py-1">
+                            <td class="flex-1">Total</td>
+                            <td class="min-w-[44px] font-bold">Ksh 34000.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+
+                <!-- submit button -->
+                 <div class="flex justify-end mb-2">
+                    <button type="submit" class="px-2 my-2 text-white bg-cyan-800 rounded-full text-sm">Create Invoice</button>
+                 </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/create_invoice.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% endblock content %}

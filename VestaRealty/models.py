@@ -13,7 +13,7 @@ class Tenant(models.Model):
     notes = models.TextField(null=True)
 
     def __str__(self):
-        return f"{self.name} - {self.unit_number}"
+        return f"{self.name} - {self.id_no}"
     
 class MonthlyRent(models.Model):
     '''Model to store the monthly rent for the tenants'''
@@ -48,8 +48,9 @@ class invoices(models.Model):
     rent = models.DecimalField(decimal_places=2,max_digits=10)
     water_bills = models.DecimalField(decimal_places=2,max_digits=10)
     electricity_bills = models.DecimalField(decimal_places=2,max_digits=10)
-    balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10)
+    month = models.DateField(null=True,auto_now_add=True)
+    balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.tenant} of {self.landlord} is invoiced a total of {self.rent + self.water_bills + self.electricity_bills + self.balance_carried_down}'
+        return f'{self.tenant} of {self.landlord} is invoiced a total of {self.rent + self.water_bills + self.electricity_bills}'

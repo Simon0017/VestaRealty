@@ -1,0 +1,41 @@
+/* Hide print button */
+.no-print {
+    display: none !important;
+}
+
+/* Ensure correct page breaks */
+@media print {
+    body {
+        font-size: 12px;
+        margin: 0;
+        padding: 10px;
+        font-size: large;
+    }
+
+    /* Ensure tables remain intact */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 5px;
+    }
+
+    /* Force consistent layout */
+    .invoice-container {
+        width: 80mm; /* Set to receipt-like width */
+        padding: 10px;
+        border: 1px solid black;
+    }
+
+    img{
+        width: 64px;
+        aspect-ratio: 1/1;
+        align-items: center;
+        margin: 0px 50px;
+        display: flex;
+        object-fit: cover;
+    }
+
+}

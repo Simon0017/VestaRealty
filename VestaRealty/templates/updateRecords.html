@@ -3,7 +3,7 @@
 {% load static  %}
 
 {% block title %}
-Vesta Realty | Rent Info
+Vesta Realty | Rent Info | {{tenant.name}}
 {% endblock title %}
 
 {% block content %}
@@ -16,7 +16,7 @@ Vesta Realty | Rent Info
            <div class="flex items-start md:flex-row space-x-2 mt-4">
                 <div class="flex space-x-2">
                     <span class="font-bold">Name:</span>
-                    <span class="text-sm">John Smith</span>
+                    <span class="text-sm"> {{tenant.name}} </span>
                 </div>
                 <div class="flex space-x-2">
                     <span class="font-bold">Location:</span>
@@ -28,7 +28,7 @@ Vesta Realty | Rent Info
                     Rent:
                 </span>
                 <span class="leading-3 text-sm py-1 px-2 bg-emerald-400 rounded-full text-white">
-                    Ksh 5,000
+                    {{tenant.Rent}}
                 </span>
                 
             </div>
@@ -55,7 +55,7 @@ Vesta Realty | Rent Info
         <!-- Form to update the records -->
         <div class="flex-grow">
             <form action="" method="post">
-                <h3 class="tracking-wide font-mono font-bold text-xl text-center">Update Record</h3>
+                <h3 class="tracking-wide font-mono font-bold text-xl text-center">Update Rent Record</h3>
                 <div class="flex flex-col md:flex-row space-x-0 md:space-x-3 mt-3" >
                     <div class="flex flex-col space-y-1">
                         <label for="month" class="font-semibold">Month:</label>
