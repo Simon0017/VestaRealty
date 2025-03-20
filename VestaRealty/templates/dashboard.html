@@ -10,34 +10,66 @@
 
     <div class="p-4">
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h2 class="text-2xl font-bold mb-4">Tenants</h2>
-            <div class="overflow-x-auto">
-                <table id="example" class="table-auto w-full stripe order-column row-border display">
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-2">Name</th>
-                            <th class="px-4 py-2">Location</th>
-                            <th class="px-4 py-2">Office</th>
-                            <th class="px-4 py-2">Age</th>
-                            <th class="px-4 py-2">Start date</th>
-                            <th class="px-4 py-2">Salary</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="border px-4 py-2">Tiger Nixon</td>
-                            <td class="border px-4 py-2">System Architect</td>
-                            <td class="border px-4 py-2">Edinburgh</td>
-                            <td class="border px-4 py-2">61</td>
-                            <td class="border px-4 py-2">2011/04/25</td>
-                            <td class="border px-4 py-2">$320,800</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h2 class="text-2xl font-bold mb-4">My Tenants</h2>
+                <div class="overflow-x-auto text-sm">
+                    <table id="example" class="table-auto w-full stripe order-column row-border display">
+                        <thead>
+                            <tr>
+                                <td class="p-2">No</td>
+                                <th class="p-2">Name</th>
+                                <th class="p-2">Property</th>
+                                <th class="p-2">Balances</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tenant in tenants %}
+                                <tr>
+                                    <td class="border p-2">{{forloop.counter}}</td>
+                                    <td class="border p-2 font-semibold">{{tenant.name}}</td>
+                                    <td class="border p-2">{{tenant.property}}</td>
+                                    <td class="border p-2 text-xs font-semibold">Ksh: {{tenant.balance}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-span-1">
+                <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    <div class="flex flex-col md:flex-row justify-between mb-3">
+                        <h2 class="text-sm md:text-2xl font-bold mb-4">My Properties</h2>
+                        <span class="font-bold text-sm">Total Bal:  Ksh: {{total}} </span>
+                    </div>
+                    <div class="overflow-x-auto text-sm">
+                        <table id="example_2" class="table-auto w-full stripe order-column row-border display text-xs">
+                            <thead>
+                                <tr>
+                                    <th class="p-2">No</th>
+                                    <th class="p-2">Name</th>
+                                    <th class="p-2">Location</th>
+                                    <th class="p-2">No of tenants</th>
+                                    <th class="p-2">Balances</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for property in properties %}
+                                    <tr>
+                                        <td class="border p-2">{{forloop.counter}}</td>
+                                        <td class="border p-2 font-semibold">{{property.name}}</td>
+                                        <td class="border p-2">{{property.location}}</td>
+                                        <td class="border p-2">{{property.tenants}}</td>
+                                        <td class="border p-2 font-semibold">Ksh: {{property.balances}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-        
         
     </div>
 
@@ -49,6 +81,9 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
+                // Add any customization options here
+            });
+            $('#example_2').DataTable({
                 // Add any customization options here
             });
         });

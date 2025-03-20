@@ -73,8 +73,58 @@ def user_registration(request):
     return render(request,'registration.html')
 
 # view for the admin dashboard
+@login_required
 def dashboard(request):
-    return render(request,'dashboard.html')
+    tenants = list(request.user.tenants.all())
+
+    tenants_information = []
+    for tenant in tenants:
+        property = tenant.property_owned_set.all().values_list('name',flat  = True)
+        property = property[0]
+        balances = 0
+        balance = list(tenant.tenant_invoice.all())
+        for bal in balance:
+            bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
+            amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d  # CHANGE THIS TO ONLY BAL CARRIED DOWN AS IT IS TEH TRUE REFLECTION
+            balances = balances + amt
+        tenants_information.append({
+            'id':tenant.id,
+            'name':tenant.name,
+            'property':property,
+            'balance':balances
+
+        })
+    
+    
+    # get the properties
+    properties = list(request.user.owner.all())
+
+    modified_property  = []
+    for property in properties:
+        tenants = list(property.tenants.all().values_list('name', flat=True))
+        prop_balance = 0
+        # search for the tenant in the tenant info list
+        for tenant_in in tenants_information:
+            if tenant_in['name'] in tenants:
+                prop_balance = prop_balance + tenant_in['balance']
+        modified_property.append({
+            'name': property.name,
+            'location': property.location,
+            'tenants': len(tenants),
+            "balances":prop_balance,
+        })
+    
+    total_balance = 0
+    for bal in modified_property:
+        total_balance = total_balance + bal['balances']
+    
+    
+    context = {
+        'tenants':tenants_information,
+        'properties':modified_property,
+        'total':total_balance,
+    }
+    return render(request,'dashboard.html',context)
 
 # view to create a new tenant
 @login_required
@@ -126,7 +176,8 @@ def create_tenant(request):
     
     return render(request,'createTenant.html',context)
 
-# view to update rent information ie rent paid
+# view to update rent information ie PAYMENTS
+@login_required
 def update_rent_info(request,tenant_id):
     #get tenant info
     tenant = Tenant.objects.get(id = tenant_id)
@@ -135,9 +186,17 @@ def update_rent_info(request,tenant_id):
         'tenant': tenant,
     }
 
+
+    
+    '''FOR TEH POSTED UPDATE REM TO UPDATE TEH BAL CARRIED DOWN IE THE BALANCE
+    MODEL "PAID INVOICE IS USED 
+    1.EXTRACT THE INVOICE INSTANCE IE USING THE TENANT AND THE MONTH 
+    "'''
+
     return render(request,'updateRecords.html',context)
 
 # view to view tenant info plus the rental records
+@login_required
 def tenant_info(request):
     landlord = request.user
 
@@ -200,6 +259,7 @@ def create_property(request):
     return render(request,'createProperty.html',context)
 
 # view to view the properties
+@login_required
 def view_properties(request):
     # get the landlord
     landlord = request.user
@@ -225,10 +285,12 @@ def view_properties(request):
     return render(request,'viewProperties.html',context)
 
 # view for the invoice viewing and download the pdf copy
+@login_required
 def view_invoice(request,invoice_id):
     # retrieve the invoice data
     invoice_data = invoices.objects.get(id = invoice_id)
 
+    bal_c_d = invoice_data.balance_carried_down if invoice_data.balance_carried_down else 0
     context = {
             'landlord':request.user.username,
             'email':request.user.email,
@@ -239,13 +301,14 @@ def view_invoice(request,invoice_id):
             'balance_carried_down':invoice_data.balance_carried_down,
             'rent':invoice_data.rent,
             'month':invoice_data.month,
-            'total': int(invoice_data.rent) + int(invoice_data.water_bills) + int(invoice_data.electricity_bills),
+            'total': invoice_data.rent + invoice_data.water_bills + invoice_data.electricity_bills + bal_c_d,
             
         }
 
     return render(request,'invoice.html',context)
 
 # view for table invoices
+@login_required
 def view_table_invoice(request):
     # get all the landlords invoice
     invoices_ = list(request.user.landlord_invoice.all())
@@ -253,6 +316,7 @@ def view_table_invoice(request):
     # modify invoices
     mod_invoices =[]
     for invoice in invoices_:
+        bal_c_d = invoice.balance_carried_down if invoice.balance_carried_down else 0
         mod_invoices.append({
             'id':invoice.id,
             'tenant':invoice.tenant.name,
@@ -261,7 +325,7 @@ def view_table_invoice(request):
             'balance_carried_down':invoice.balance_carried_down,
             'rent':invoice.rent,
             'month':invoice.month,
-            'total': int(invoice.rent) + int(invoice.water_bills) + int(invoice.electricity_bills),
+            'total': invoice.rent + invoice.water_bills + invoice.electricity_bills + bal_c_d,
             
         })
 
@@ -284,6 +348,9 @@ def create_invoice(request):
         try:
             # get the user instance
             tenant = Tenant.objects.get(name  = customer)
+
+            # REM TO MAKE THE INVOICE UNIQUE IE CHECK IF THERE IS AN INVOICE FOR THE TENANT FOR THAT MONTH
+            # IF YES RETURN ERROR IF NOT CREATE AN INVOICE
             data = invoices(
                 landlord = landlord,
                 tenant = tenant,
@@ -312,6 +379,7 @@ def create_invoice(request):
     return render(request,'create_invoice.html',context)
 
 # view to get the rent
+@login_required
 @csrf_exempt
 def get_rent(request):
     if request.method == 'POST':

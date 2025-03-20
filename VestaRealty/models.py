@@ -49,8 +49,24 @@ class invoices(models.Model):
     water_bills = models.DecimalField(decimal_places=2,max_digits=10)
     electricity_bills = models.DecimalField(decimal_places=2,max_digits=10)
     month = models.DateField(null=True,auto_now_add=True)
-    balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True)
+    balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True) #should be balance brought forward
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.tenant} of {self.landlord} is invoiced a total of {self.rent + self.water_bills + self.electricity_bills}'
+    
+class paid_invoices(models.Model):
+    '''This is the model that takes cre of all the paid invoices with a foreign key on the tenant model or the invoice model'''
+    invoice = models.ForeignKey(invoices,on_delete=models.CASCADE,related_name='paid_invoice',null=True,blank=True)
+    tenant = models.ForeignKey(Tenant,on_delete=models.CASCADE,related_name='paid_tenant',null=True,blank=True)
+    rent = models.DecimalField(decimal_places=2,max_digits=10)
+    water_bills = models.DecimalField(decimal_places=2,max_digits=10)
+    electricity_bills = models.DecimalField(decimal_places=2,max_digits=10)
+    mpesa_code = models.CharField(max_length=100)
+    month = models.DateField(null=True,auto_now_add=True)
+    balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True)
+    notes = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.tenant} has paid the invoice {self.invoice} an amount {self.rent + self.electricity_bills + self.water_bills} and has a balance of amount {self.balance_carried_down}'

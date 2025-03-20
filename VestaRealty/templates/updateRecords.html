@@ -8,7 +8,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
 
 {% block content %}
 
-    <div class="p-4 flex flex-col space-x-3 md:flex-row mx-2 md:mx-6 my-auto bg-white rounded-md shadow-lg">
+    <div class="p-4 flex flex-col space-x-4 space-y-6 md:space-y-0 md:flex-row mx-2 md:mx-6 my-auto bg-white rounded-md shadow-lg">
         <!-- Tenant basic info -->
         <div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKK6xibIHpmaTKm8ZGO5HtVbLYzKYs-C7YZQ&s" alt="Blank User"
@@ -55,7 +55,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
         <!-- Form to update the records -->
         <div class="flex-grow">
             <form action="" method="post">
-                <h3 class="tracking-wide font-mono font-bold text-xl text-center">Update Rent Record</h3>
+                <h3 class="font-serif font-bold text-base md:text-2xl text-center shadow-sm mb-4">Update <span class="text-cyan-600">{{tenant.name}}'s</span> Payment Record</h3>
                 <div class="flex flex-col md:flex-row space-x-0 md:space-x-3 mt-3" >
                     <div class="flex flex-col space-y-1">
                         <label for="month" class="font-semibold">Month:</label>
@@ -63,7 +63,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
                         <input type="month" value="2025-02" name="month" class="rounded-md border border-gray-200 px-2 p-1"> 
                     </div>
                     <div class="flex flex-col  space-y-1">
-                        <label for="amount" class="font-semibold">Amount Paid:</label>
+                        <label for="amount" class="font-semibold">Amount Paid(Rent):</label>
                         <div class="flex border border-gray-200 rounded-md space-x-1 items-center">
                              
                             <!-- Minus sign -->
@@ -73,7 +73,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
                                 </svg>
                             </div>
                             <!-- Input -->
-                            <input type="text" class="w-full focus:ring-1 focus:ring-gray-400 px-2 py-1" name="amount">
+                            <input type="text" class="w-full focus:ring-1 focus:ring-gray-400 px-2 py-1" name="amount" placeholder="13000">
                             <!-- Plus sign -->
                             <div class="hover:cursor-pointer bg-gray-200 h-full p-1" title="+1000">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
@@ -83,6 +83,18 @@ Vesta Realty | Rent Info | {{tenant.name}}
                         </div>
                     </div>
                     <div class="flex flex-col space-y-1 flex-grow">
+                        <label for="electricity" class="font-semibold">Electricity bill:</label>
+                        <input type="text" name="electricity" id="electricity" class="rounded-md border border-gray-200 px-2 p-1" placeholder="1500">
+                    </div>
+                    
+                </div>
+                <!-- second row -->
+                <div class="flex flex-col md:flex-row space-x-0 md:space-x-3 mt-3" >
+                    <div class="flex flex-col space-y-1">
+                        <label for="water" class="font-semibold">Water bill:</label>
+                        <input type="text" id="water" name="water" class="rounded-md border border-gray-200 px-2 p-1" placeholder="2000">
+                    </div>
+                    <div class="flex flex-col space-y-1 ">
                         <label for="mpesa" class="font-semibold ">Mpesa code:</label>
                         <input type="text" name="mpesa" class="rounded-md border border-gray-200 px-2 py-1" placeholder="optional">
                         

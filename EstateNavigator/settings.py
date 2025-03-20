@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import dj_database_url
+
+load_dotenv() #load env variables
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,10 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4--)u1(6joe+0fy4&k3fneo*n5#ulevts_qj!b#zrt5al6=30j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'false').lower() == 'true'
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -76,17 +78,24 @@ WSGI_APPLICATION = 'EstateNavigator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-load_dotenv() #load env variables
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME','default_db'), 
-        'USER': os.getenv('DB_USER','default_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD','default_password'),
-        'HOST': os.getenv('DB_HOST','localhost'), 
-        'PORT': os.getenv('DB_PORT','5432'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME','default_db'), 
+            'USER': os.getenv('DB_USER','default_user'),
+            'PASSWORD': os.getenv('DB_PASSWORD','default_password'),
+            'HOST': os.getenv('DB_HOST','localhost'), 
+            'PORT': os.getenv('DB_PORT','5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),  # Use the DATABASE_URL environment variable
+            conn_max_age=600
+        )
+    }
 
 
 
@@ -125,6 +134,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# if DEBUG:
+#     STATIC_URL = '/static/'
+#     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# else:
+#     STATIC_URL = '/static/'
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
