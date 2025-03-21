@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded",(event) => {
                         success_message.style.display = 'none';
                         error_message.style.display = 'none';
 
-                        // window.location.href = '/view_invoice';
+                        window.location.href = '/table_invoice';
                     }, 3000);
                     
                 } else {

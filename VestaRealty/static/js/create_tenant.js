@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded",(event) => {
                         success_message.style.display = 'none';
                         error_message.style.display = 'none';
 
-                        // window.location.href = '/dashboard';
+                        window.location.href = '/view_tenant';
                     }, 3000);
                     
                 } else {
