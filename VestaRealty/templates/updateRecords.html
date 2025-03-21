@@ -70,21 +70,35 @@ Vesta Realty | Rent Info | {{tenant.name}}
                 
             </div>
            <div>
-                <h2 class="tracking-wider font-mono font-bold mt-4">Rental History</h2>
-                <div class="flex justify-between">
-                    <span>
+                <h2 class="tracking-wider font-mono font-bold mt-4 uppercase">Rental History</h2>
+                <div class="flex justify-between mt-2">
+                    <span class="tracking-wide font-semibold uppercase">
                         Month
                     </span>
-                    <span>
+                    <span class="tracking-wide font-semibold uppercase">
                         Status
                     </span>
                 </div>
                 <div class="flex justify-between">
-                    <span>
-                        January 2023
+                    {% for rent in rent_history %}
+                        <span>
+                            {{rent.month}}
+                        </span>
+                        <span>
+                            {% if rent.balance == 0 %}
+                                Bal: <span class="leading-3 text-sm py-1 px-2 bg-emerald-400 rounded-full">Paid in Full</span>
+                            {% else %}
+                                Bal: <span class="leading-3 text-xs py-1 px-2 bg-emerald-400 rounded-full">Ksh: {{rent.balance}}</span>
+                            {% endif %}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-between mt-2 border-t border-gray-950 pt-3">
+                    <span class="font-semibold text-sm">
+                        Total Balances: 
                     </span>
-                    <span>
-                        Bal: <span class="leading-3 text-sm py-1 px-2 bg-emerald-400 rounded-full">Paid in Full</span>
+                    <span class="leading-3 text-xs py-1 px-2 bg-emerald-400 rounded-full">
+                        Ksh: {{balance}}
                     </span>
                 </div>
            </div>

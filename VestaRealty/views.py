@@ -85,10 +85,16 @@ def dashboard(request):
         property = property[0]
         balances = 0
         balance = list(tenant.tenant_invoice.all())
-        for bal in balance:
-            bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
-            amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d  # CHANGE THIS TO ONLY BAL CARRIED DOWN AS IT IS TEH TRUE REFLECTION
-            balances = balances + amt
+        '''Logic : if check the invoices if there exixt paid invoices if there is one chck for the balance in th epaid invoice 
+        if not take the invoice balaance'''
+        for bal in balance:  #bal here stands for the invoice instance
+            paid_invoice_instance = bal.paid_invoice.all().first()
+            if paid_invoice_instance is not None:
+                balances = balances + paid_invoice_instance.balance_carried_down
+            else:
+                bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
+                amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d 
+                balances = balances + amt
         tenants_information.append({
             'id':tenant.id,
             'name':tenant.name,
@@ -183,9 +189,35 @@ def create_tenant(request):
 def update_rent_info(request,tenant_id):
     #get tenant info
     tenant = Tenant.objects.get(id = tenant_id)
+
+    # get the remaining balance
+    rent_history = []
+    balances = 0
+    balance = list(tenant.tenant_invoice.all())
+    '''Logic : if check the invoices if there exixt paid invoices if there is one chck for the balance in th epaid invoice 
+    if not take the invoice balaance'''
+    for bal in balance:  #bal here stands for the invoice instance
+        paid_invoice_instance = bal.paid_invoice.all().first()
+        if paid_invoice_instance is not None:
+            balances = balances + paid_invoice_instance.balance_carried_down
+            rent_history.append({
+                'balance': balances,
+                'month':paid_invoice_instance.month,
+            })
+        else:
+            bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
+            amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d 
+            balances = balances + amt
+            rent_history.append({
+                'balance' :balances,
+                'month':bal.month,
+            })
+    print(rent_history)
     
     context = {
         'tenant': tenant,
+        'balance':balances,
+        'rent_history':rent_history,
     }
 
 
@@ -257,11 +289,23 @@ def tenant_info(request):
     for tenant in tenants:
         property = tenant.property_owned_set.all().values_list('name',flat  = True)
         property = property[0]
+        balances = 0
+        balance = list(tenant.tenant_invoice.all())
+        '''Logic : if check the invoices if there exixt paid invoices if there is one chck for the balance in th epaid invoice 
+        if not take the invoice balaance'''
+        for bal in balance:  #bal here stands for the invoice instance
+            paid_invoice_instance = bal.paid_invoice.all().first()
+            if paid_invoice_instance is not None:
+                balances = balances + paid_invoice_instance.balance_carried_down
+            else:
+                bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
+                amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d 
+                balances = balances + amt
         modified_tenants.append({
             'name': tenant.name,
             'property': property,
             'id_no': tenant.id_no,
-            'Rent': tenant.Rent,
+            'balance': balances,
             'id': tenant.id,
         })
     
