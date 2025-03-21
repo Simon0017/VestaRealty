@@ -48,7 +48,7 @@ class invoices(models.Model):
     rent = models.DecimalField(decimal_places=2,max_digits=10)
     water_bills = models.DecimalField(decimal_places=2,max_digits=10)
     electricity_bills = models.DecimalField(decimal_places=2,max_digits=10)
-    month = models.DateField(null=True,auto_now_add=True)
+    month = models.CharField(max_length=20,null=True)
     balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True) #should be balance brought forward
     created_on = models.DateTimeField(auto_now_add=True)
 
@@ -63,7 +63,7 @@ class paid_invoices(models.Model):
     water_bills = models.DecimalField(decimal_places=2,max_digits=10)
     electricity_bills = models.DecimalField(decimal_places=2,max_digits=10)
     mpesa_code = models.CharField(max_length=100)
-    month = models.DateField(null=True,auto_now_add=True)
+    month = models.CharField(null=True,max_length=20)
     balance_carried_down = models.DecimalField(decimal_places=2,max_digits=10,null=True)
     notes = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)

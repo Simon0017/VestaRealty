@@ -8,6 +8,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 import secrets
 import re
 from datetime import timedelta
@@ -19,10 +20,11 @@ def base_view(request):
 
 # view for the homepage
 def homepage(request):
-    if request.user is not None:
-        return redirect('dashboard')
-    else:
-        return redirect('user_login')
+    return render(request, 'homepage.html')
+    # if request.user is not None:
+    #     return redirect('dashboard')
+    # else:
+    #     return redirect('user_login')
 
 # view for user login
 def user_login(request):
@@ -187,13 +189,61 @@ def update_rent_info(request,tenant_id):
     }
 
 
-    
+    return render(request,'updateRecords.html',context)
+
+# view for the form of the updating the payment
+def form_update_payment(request):    
     '''FOR TEH POSTED UPDATE REM TO UPDATE TEH BAL CARRIED DOWN IE THE BALANCE
     MODEL "PAID INVOICE IS USED 
     1.EXTRACT THE INVOICE INSTANCE IE USING THE TENANT AND THE MONTH 
     "'''
 
-    return render(request,'updateRecords.html',context)
+    if request.method == 'POST':
+        tenant = request.POST['tenant']
+        amount = request.POST['amount']
+        electricity = request.POST['electricity']
+        water = request.POST['water']
+        mpesa = request.POST['mpesa']
+        notes = request.POST['notes']
+        month = request.POST['month']
+        
+        try:
+            # get the tenant instance and the invoice instance for the month
+            tenant_instance = Tenant.objects.get(name = tenant)
+            invoice_instance  = tenant_instance.tenant_invoice.get(month__icontains = month)
+            
+            if invoice_instance:
+                # calculate the balance
+                rent = invoice_instance.rent if invoice_instance.rent is not None else 0
+                water_balance = invoice_instance.water_bills if invoice_instance.water_bills is not None else 0
+                electricity_balance = invoice_instance.electricity_bills if invoice_instance.electricity_bills is not None else 0
+                bal_c_d = invoice_instance.balance_carried_down if invoice_instance.balance_carried_down is not None else 0
+                balance = (int(rent)+ int(water_balance) + int(electricity_balance) + (bal_c_d)) - (int(amount) + int(electricity) + int(water))
+                
+                print(balance)
+                payment = paid_invoices(
+                    invoice = invoice_instance,
+                    tenant  = tenant_instance,
+                    rent = amount,
+                    water_bills = water,
+                    electricity_bills =electricity,
+                    mpesa_code = mpesa,
+                    month = month,
+                    balance_carried_down = balance ,
+                    notes = notes
+                )
+
+                payment.save()
+
+                return JsonResponse({
+                    'status': 'success'
+                })
+
+        except Exception as e:
+            print(f'Error occurred : {e}')
+            return JsonResponse({
+                'status':'error'
+            })
 
 # view to view tenant info plus the rental records
 @login_required

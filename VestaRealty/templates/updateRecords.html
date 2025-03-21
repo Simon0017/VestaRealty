@@ -9,10 +9,47 @@ Vesta Realty | Rent Info | {{tenant.name}}
 {% block content %}
 
     <div class="p-4 flex flex-col space-x-4 space-y-6 md:space-y-0 md:flex-row mx-2 md:mx-6 my-auto bg-white rounded-md shadow-lg">
+
+        <div class="fixed top-6 right-4 max-w-xs w-full bg-green-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;" id="success_message">
+            <!-- Başarılı İkon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8.5 8.5a1 1 0 01-1.414 0l-4.5-4.5a1 1 0 011.414-1.414L8 12.086l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+
+            <!-- Toast Mesajı -->
+            <div class="flex-1">
+                <p class="font-bold">Success</p>
+                <p class="text-sm">Payment update  successful!</p>
+            </div>
+
+            <!-- Kapatma Butonu -->
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="fixed top-6 right-4 max-w-xs w-full bg-red-500 text-white shadow-lg rounded-lg p-4 flex items-center space-x-3 transition-transform transform hover:scale-105" style="display: none;" id="error_message">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.366-.446.976-.446 1.342 0l6 7.5a1 1 0 01-.671 1.601H3.07a1 1 0 01-.671-1.601l6-7.5zM10 13a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" clip-rule="evenodd" />
+            </svg>
+            <div class="flex-1">
+                <p class="font-bold">Error</p>
+                <p class="text-sm">An error occurred. Please try again.</p>
+            </div>
+            <button class="text-white hover:text-gray-300 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+        
+
         <!-- Tenant basic info -->
         <div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKK6xibIHpmaTKm8ZGO5HtVbLYzKYs-C7YZQ&s" alt="Blank User"
-            class="w-fit md:w-40 aspect-square rounded-full shadow-lg">
+            class="w-fit md:w-40 mx-auto aspect-square rounded-full shadow-lg">
            <div class="flex items-start md:flex-row space-x-2 mt-4">
                 <div class="flex space-x-2">
                     <span class="font-bold">Name:</span>
@@ -54,13 +91,14 @@ Vesta Realty | Rent Info | {{tenant.name}}
         </div>
         <!-- Form to update the records -->
         <div class="flex-grow">
-            <form action="" method="post">
+            <form action="" method="post" id="form">
+                {% csrf_token %}
                 <h3 class="font-serif font-bold text-base md:text-2xl text-center shadow-sm mb-4">Update <span class="text-cyan-600">{{tenant.name}}'s</span> Payment Record</h3>
                 <div class="flex flex-col md:flex-row space-x-0 md:space-x-3 mt-3" >
                     <div class="flex flex-col space-y-1">
                         <label for="month" class="font-semibold">Month:</label>
                         <!-- Set defalt to the current month USE JS -->
-                        <input type="month" value="2025-02" name="month" class="rounded-md border border-gray-200 px-2 p-1"> 
+                        <input type="month" value="2025-03" name="month" class="rounded-md border border-gray-200 px-2 p-1"> 
                     </div>
                     <div class="flex flex-col  space-y-1">
                         <label for="amount" class="font-semibold">Amount Paid(Rent):</label>
@@ -97,6 +135,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
                     <div class="flex flex-col space-y-1 ">
                         <label for="mpesa" class="font-semibold ">Mpesa code:</label>
                         <input type="text" name="mpesa" class="rounded-md border border-gray-200 px-2 py-1" placeholder="optional">
+                        <input type="text" value="{{tenant.name}}" name="tenant" class="hidden">
                         
                     </div>
                 </div>
@@ -107,5 +146,9 @@ Vesta Realty | Rent Info | {{tenant.name}}
             </form>
         </div>
     </div>
+
+    <!-- Js scripts -->
+     <script src="{% static 'js/update_records.js' %}"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 {% endblock content %}

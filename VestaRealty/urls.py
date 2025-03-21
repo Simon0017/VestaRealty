@@ -19,5 +19,6 @@ urlpatterns = [
     path('',views.homepage,name=''),
     path('create_invoice',views.create_invoice,name='create_invoice'),
     path('get_rent',views.get_rent,name='get_rent'),
-    path('table_invoice',views.view_table_invoice,name='table_invoice')
+    path('table_invoice',views.view_table_invoice,name='table_invoice'),
+    path('update_payments',views.form_update_payment,name = 'update_payments'),
 ]

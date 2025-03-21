@@ -1,0 +1,199 @@
+{% load static  %}
+<!-- This is the landing page of the web site -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vesta Realty | Home</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/faviconn_2.png' %}" type="image/x-icon">
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes reveal {
+            0% { transform: scaleX(0); transform-origin: left; }
+            100% { transform: scaleX(1); transform-origin: left; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .reveal-line {
+            animation: reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .marquee {
+            animation: marquee 30s linear infinite;
+        }
+
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .image-gradient {
+            background: linear-gradient(to right, rgba(0,0,0,0.95), rgba(0,0,0,0.3));
+        }
+
+        @media (max-width: 768px) {
+            .image-gradient {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+            }
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1, h2, .logo {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .hover-line {
+            position: relative;
+        }
+
+        .hover-line::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .hover-line:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-white selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 nav-blur border-b border-white/10">
+        <div class="max-w-[2000px] mx-auto px-4 sm:px-8">
+            <div class="flex justify-between h-24 items-center">
+                <div class="text-2xl sm:text-3xl font-light tracking-[0.3em] logo">VESTA REALTY</div>
+                <div class="hidden md:flex space-x-16 text-xs tracking-[0.2em]">
+                    <a href="/login" class="hover-line">LOGIN</a>
+                    <a href="/registration" class="hover-line">REGISTER</a>
+                    <a href="/dashboard" class="hover-line">DASHBOARD</a>
+                    <a href="mailto:leemohsj65@gmail.com" class="hover-line">CONTACT</a>
+                </div>
+                <button class="md:hidden w-8 h-8 flex flex-col justify-center space-y-2" onclick="toggleMenu()" aria-label="Toggle menu">
+                    <span class="w-full h-[1px] bg-white transform transition-transform origin-right"></span>
+                    <span class="w-full h-[1px] bg-white transform transition-transform origin-right"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 bg-black z-40 flex flex-col justify-center items-center space-y-12 nav-blur md:hidden pt-24">
+        <a href="/login" class="text-2xl tracking-[0.2em] hover:text-white/50 transition-colors">LOGIN</a>
+        <a href="/registration" class="text-2xl tracking-[0.2em] hover:text-white/50 transition-colors">REGISTER</a>
+        <a href="/dashboard" class="text-2xl tracking-[0.2em] hover:text-white/50 transition-colors">DASHBOARD</a>
+        <a href="mailto:leemohsj65@gmail.com" class="text-2xl tracking-[0.2em] hover:text-white/50 transition-colors">CONTACT</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen relative flex items-center">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                    alt="Estate" 
+                    class="w-full h-full object-cover">
+            <div class="absolute inset-0 image-gradient"></div>
+        </div>
+        <div class="relative z-10 max-w-[2000px] mx-auto px-4 sm:px-8 pt-32">
+            <div class="max-w-4xl">
+                <p class="text-sm tracking-[0.3em] mb-8 fade-in" style="animation-delay: 0.5s">WELCOME TO VESTAREALTY</p>
+                <h1 class="text-[12vw] md:text-[7vw] font-light leading-[0.9] mb-8 fade-in" style="animation-delay: 0.8s">
+                    RENT IS<br/>DUE!!
+                </h1>
+                <div class="h-[1px] w-32 bg-white reveal-line mb-12" style="animation-delay: 1.2s"></div>
+                <p class="text-lg sm:text-xl font-light tracking-wide text-white/80 max-w-xl mb-16 fade-in leading-relaxed" style="animation-delay: 1.5s">
+                    Create properties,fill them with tenants and Create invoices. <br>Manage your estate with elegance.
+                </p>
+                <a href="/registration">
+                    <button class="group w-full sm:w-auto px-8 sm:px-12 py-4 border border-white hover:bg-white hover:text-black transition-all duration-500 text-xs tracking-[0.2em] fade-in flex items-center justify-center sm:justify-start gap-4" style="animation-delay: 1.8s">
+                        GET STARTED
+                        <span class="h-[1px] w-8 bg-current transform transition-transform group-hover:translate-x-2"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scrolling Text -->
+    <div class="overflow-hidden py-4 sm:py-8 bg-white text-black border-y border-black/20">
+        <div class="whitespace-nowrap marquee inline-block text-[80px] sm:text-[120px] md:text-[180px] font-light leading-none opacity-90">
+            MANAGE YOUR ESTATES WITH EASE &nbsp;&nbsp;&nbsp; ACCOUNT FOR ALL YOUR PROPERTY &nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+
+    <!-- Featured Collection -->
+    <section class="py-20 sm:py-40 px-4 sm:px-8">
+        <div class="max-w-[2000px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-20">
+            <div class="space-y-8 sm:space-y-12 self-center">
+                <div class="space-y-4">
+                    <p class="text-sm tracking-[0.2em] text-white/60">VESTA REALTY</p>
+                </div>
+                <p class="text-white/70 leading-relaxed text-base sm:text-lg">
+                    <q>Effective execution starts with crisp accountability, and you cannot scale your business without it.</q>
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <img src="https://images.unsplash.com/photo-1455577625686-e8e5578a4c19?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hbGwlMjBob3VzZXN8ZW58MHx8MHx8fDA%3D" alt="Home" class="w-full aspect-[3/4] object-cover hover:scale-[1.02] transition-transform duration-700">
+                <img src="https://plus.unsplash.com/premium_photo-1679697668704-f1b607596a5a?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Home" class="w-full aspect-[3/4] object-cover sm:mt-20 hover:scale-[1.02] transition-transform duration-700">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('active');
+            
+            const menuButton = document.querySelector('nav button');
+            const spans = menuButton.querySelectorAll('span');
+            
+            spans.forEach((span, index) => {
+                if (menu.classList.contains('active')) {
+                    span.style.transform = index === 0 ? 'rotate(-45deg)' : 'rotate(45deg)';
+                } else {
+                    span.style.transform = 'none';
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>
