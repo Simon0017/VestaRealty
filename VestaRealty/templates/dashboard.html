@@ -11,6 +11,8 @@
     <div class="p-4">
 
         <div class="grid grid-cols-1 md:grid-cols-2">
+
+            <!-- My Tenants -->
             <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <h2 class="text-2xl font-bold mb-4">My Tenants</h2>
                 <div class="overflow-x-auto text-sm">
@@ -37,6 +39,8 @@
                 </div>
             </div>
 
+
+            <!-- Properties -->
             <div class="col-span-1">
                 <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div class="flex flex-col md:flex-row justify-between mb-3">
@@ -69,6 +73,42 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Pyment records -->
+            <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h2 class="text-2xl font-bold mb-4">Payment records</h2>
+                <div class="overflow-x-auto text-sm">
+                    <table id="example_3" class="table-auto w-full stripe order-column row-border display">
+                        <thead>
+                            <tr>
+                                <td class="p-2">No</td>
+                                <th class="p-2">Tenant</th>
+                                <th class="p-2">Month</th>
+                                <th class="p-2">Mpesa</th>
+                                <th class="p-2">Rent</th>
+                                <th class="p-2">Water</th>
+                                <th class="p-2">Electricity</th>
+                                <th class="p-2">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payment in payments %}
+                                <tr>
+                                    <td class="border p-2">{{forloop.counter}}</td>
+                                    <td class="border p-2 font-semibold">{{payment.tenant.name}}</td>
+                                    <td class="border p-2 text-xs font-semibold">{{payment.month}} </td>
+                                    <td class="border p-2">{{payment.mpesa_code}}</td>
+                                    <td class="border p-2">Ksh{{payment.rent}}</td>
+                                    <td class="border p-2">Ksh{{payment.water_bills}}</td>
+                                    <td class="border p-2">Ksh{{payment.electricity_bills}}</td>
+                                    <td class="border p-2 text-xs font-semibold tracking-wide">Ksh: {{payment.balance_carried_down}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
         
     </div>
@@ -84,6 +124,9 @@
                 // Add any customization options here
             });
             $('#example_2').DataTable({
+                // Add any customization options here
+            });
+            $('#example_3').DataTable({
                 // Add any customization options here
             });
         });

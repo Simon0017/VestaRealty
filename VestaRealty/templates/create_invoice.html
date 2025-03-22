@@ -52,10 +52,10 @@ Vesta Realty | Create Invoice
         <form action="" id="form">
         {% csrf_token %}
             <div class="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg" id="invoice">
-                <img src="https://images.pexels.com/photos/1481105/pexels-photo-1481105.jpeg" alt="chippz" class="mx-auto w-16 rounded-md shadow-md" />
+                <img src="{% static 'img/logo.png' %}" alt="logo" class="mx-auto w-16 rounded-md shadow-md blur-xs shadow-yellow-100" />
                 <div class="flex flex-col justify-center items-center gap-2">
-                    <h4 class="font-semibold">Martin Estate</h4>
-                    <p class="text-xs">martinwafula@gmail.com</p>
+                    <h4 class="font-semibold">{{request.user.username}}'s Estates</h4>
+                    <p class="text-xs">{{request.user.email}} </p>
                 </div>
                 <div class="flex flex-col gap-3  py-6 text-xs">
                     <p class="flex justify-between">

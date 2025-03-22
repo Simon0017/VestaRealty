@@ -126,11 +126,20 @@ def dashboard(request):
     for bal in modified_property:
         total_balance = total_balance + bal['balances']
     
+    # get the invoices paid record
+    paid_inv = []
+    tenants_ = list(request.user.tenants.all())
+    for tenant in tenants_:
+        tenants_paid_inv = list(tenant.paid_tenant.all())
+        for inv in tenants_paid_inv:
+            paid_inv.append(inv)
+
     
     context = {
         'tenants':tenants_information,
         'properties':modified_property,
         'total':total_balance,
+        'payments':paid_inv
     }
     return render(request,'dashboard.html',context)
 
