@@ -93,7 +93,8 @@ if DEBUG:
 else:
     DATABASES = {
         'default': dj_database_url.config(
-            default='postgresql://vestarealty_db_user:qaI9qeLtQkerBBUner0gPCdCkcMYgJWY@dpg-cve5fjtds78s73cr87jg-a.oregon-postgres.render.com/vestarealty_db',  # Use the DATABASE_URL environment variable
+            # default='postgresql://vestarealty_db_user:qaI9qeLtQkerBBUner0gPCdCkcMYgJWY@dpg-cve5fjtds78s73cr87jg-a.oregon-postgres.render.com/vestarealty_db',  # Use the DATABASE_URL environment variable
+            default= "postgres://avnadmin:AVNS_OyvdxGbLptrMvamA17f@vestarealtydb-vestarealty.h.aivencloud.com:25523/defaultdb?sslmode=require",
             conn_max_age=600
         )
     }
