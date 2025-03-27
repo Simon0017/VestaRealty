@@ -79,6 +79,8 @@ WSGI_APPLICATION = 'EstateNavigator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+DATABASE_URL = os.getenv('DATABASE_URL')
+
 if DEBUG:
     DATABASES = {
         'default': {
@@ -94,7 +96,7 @@ else:
     DATABASES = {
         'default': dj_database_url.config(
             # default='postgresql://vestarealty_db_user:qaI9qeLtQkerBBUner0gPCdCkcMYgJWY@dpg-cve5fjtds78s73cr87jg-a.oregon-postgres.render.com/vestarealty_db',  # Use the DATABASE_URL environment variable
-            default= "postgres://avnadmin:AVNS_OyvdxGbLptrMvamA17f@vestarealtydb-vestarealty.h.aivencloud.com:25523/defaultdb?sslmode=require",
+            default= DATABASE_URL,
             conn_max_age=600
         )
     }
