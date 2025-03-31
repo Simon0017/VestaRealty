@@ -16,6 +16,7 @@
                 <table id="example" class="table-auto w-full stripe order-column row-border display">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2">#</th>
                             <th class="px-4 py-2">Name</th>
                             <th class="px-4 py-2">Month</th>
                             <th class="px-4 py-2">Rent</th>
@@ -29,6 +30,7 @@
                     <tbody>
                         {% for invoice in invoices %}
                             <tr>
+                                <td class="border px-4 py-2">{{forloop.counter}} </td>
                                 <td class="border px-4 py-2">{{invoice.tenant}} </td>
                                 <td class="border px-4 py-2">{{invoice.month}}</td>
                                 <td class="border px-4 py-2">Ksh: {{invoice.rent}} </td>
@@ -37,11 +39,16 @@
                                 <td class="border px-4 py-2">Ksh: {{invoice.balance_carried_down}}</td>
                                 <td class="border px-4 py-2">Ksh: {{invoice.total}}</td>
                                 <td class="border px-4 py-2">
-                                <div class="flex justify-center">
+                                <div class="flex justify-center space-x-2">
                                     <a href="{% url 'view_invoice' invoice.id %}" class="hover:text-cyan-500"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     </svg>
+                                    </a>
+                                    <a href="{% url 'rent_info' invoice.id %}" class="hover:text-indigo-800">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                                          </svg>                                          
                                     </a>
                                 </div>
                                 </td>

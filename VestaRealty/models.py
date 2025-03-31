@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 class Tenant(models.Model):
     '''Model for tenants that are registered by the Landlord'''
@@ -11,6 +12,7 @@ class Tenant(models.Model):
     date_joined = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True)
+    password = models.CharField(max_length=200,unique=True,default=uuid.uuid4())
 
     def __str__(self):
         return f"{self.name} - {self.id_no}"

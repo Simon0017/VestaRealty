@@ -12,6 +12,7 @@ from django.utils.dateparse import parse_date
 import secrets
 import re
 from datetime import timedelta
+from .mpesa import *
 
 
 # view for the base.html
@@ -33,12 +34,26 @@ def user_login(request):
         password = request.POST['password']
 
         try:
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return JsonResponse({
-                    'status':'success',
-                })
+            if username.endswith('_Ten'):
+                username = username[:-4]
+                
+                # get the tenant
+                tenant  = Tenant.objects.get(name  = username)
+                if tenant and tenant.password == password:
+                    request.session['tenant'] = tenant
+                else:
+                    return JsonResponse({
+                        'status':'error',
+                    })
+                
+
+            else:
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return JsonResponse({
+                        'status':'success',
+                    })
         except Exception as e:
             return JsonResponse({
                 'status':'error',
@@ -195,9 +210,12 @@ def create_tenant(request):
 
 # view to update rent information ie PAYMENTS
 @login_required
-def update_rent_info(request,tenant_id):
-    #get tenant info
-    tenant = Tenant.objects.get(id = tenant_id)
+def update_rent_info(request,invoice_id):
+    # get the invoice
+    invoice = invoices.objects.get(pk = invoice_id)
+    
+    # get tenant info
+    tenant = invoice.tenant
 
     # get the remaining balance
     rent_history = []
@@ -221,14 +239,14 @@ def update_rent_info(request,tenant_id):
                 'balance' :balances,
                 'month':bal.month,
             })
-    print(rent_history)
+    # print(rent_history)
     
     context = {
         'tenant': tenant,
         'balance':balances,
         'rent_history':rent_history,
+        'invoice':invoice,
     }
-
 
     return render(request,'updateRecords.html',context)
 
@@ -493,3 +511,51 @@ def get_rent(request):
         'Rent': tenant.Rent,
 
     })
+
+@login_required
+def user_profile(request):
+    return render(request, 'user_profile.html')
+
+def checkOut(request):
+    if request.method == "POST":
+        phone = request.POST.get("phone")  # e.g., 254712345678
+        amount = request.POST.get("amount")
+        account_reference = f'Payment to landlord from {phone}'
+
+        callback_url = "http://127.0.0.1:8000/mpesa_callback"
+
+        response = stk_push(phone, amount, account_reference, callback_url)
+        return JsonResponse(response)
+     
+    return render(request,'checkout_payment.html')
+
+
+@csrf_exempt
+def mpesa_callback(request):
+    data = json.loads(request.body)
+    print("M-Pesa Callback:", data)  # Log response for debugging
+    return JsonResponse({"message": "Callback received"}, status=200)
+
+# func to mpesa callback url validation
+@csrf_exempt
+def mpesa_validation(request):
+    data = json.loads(request.body)
+    print("Validation Request:", data)  # Debugging
+    return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})  # Accepts transaction
+
+
+# func to mpesa callback url vconfirmation
+@csrf_exempt
+def mpesa_confirmation(request):
+    data = json.loads(request.body)
+    print("Confirmation Request:", data)  # Debugging
+    return JsonResponse({"ResultCode": 0, "ResultDesc": "Received"})  # Confirms transaction
+
+
+# view for the credentials default to share for the tenant login
+def tenant_credentials(request,tenant_id):
+    tenant = Tenant.objects.get(pk = tenant_id)
+    context  = {
+        'tenant':tenant,
+    }
+    return render(request,'tenant_info.html',context)

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Vesta Realty | User Profile
+{% endblock title %}
+{% block stylesheets %}
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+{% endblock stylesheets %}
+{% block content %}
+
+    <div class="bg-slate-600 h-screen flex items-center justify-center p-4 overflow-x-auto ">
+        <div class="bg-white my-6 dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
+            <div class="flex flex-col">
+                <div class="text-center mb-8 md:mb-0">
+                    <img src="{% static 'img/logo.png' %}" alt="Profile Picture" class="rounded-full w-48 h-48 mx-auto mb-4 border-4 border-yellow-600 transition-transform duration-300 hover:scale-105">
+                    <input type="text" name="username" id="" class="text-2xl font-bold text-indigo-800 dark:text-white mb-2 w-2/5 md:w-1/2  rounded-md shadow-sm mx-auto p-1" value="John Doe" disabled>
+                    <button class="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300 block mx-auto">Edit Profile</button>
+                </div>
+                <div class="md:pl-8">
+                    
+                    <h2 class="text-xl font-semibold text-indigo-800 dark:text-white mb-4">Information</h2>
+                    <div class="flex flex-col md:flex-row mb-3 md:space-x-10">
+                        <div class="flex md:flex-col space-x-3 md:space-x-0 items-center space-y-0 md:space-y-3">
+                            <span class="font-semibold">Tenants:</span>
+                            <span class="px-3 py-1">20</span>
+                            <button class="inline-flex md:hidden px-2 md:px-5 bg-indigo-800 text-white rounded-md text-sm md:text-base">Add Tenant</button>
+                        </div>
+                        <div class="flex md:flex-col space-x-3 md:space-x-0 items-center  space-y-0 md:space-y-3">
+                            <span class="font-semibold">Properties:</span>
+                            <span class="px-3 py-1">
+                                5
+                            </span>
+                            <button class="inline-flex md:hidden px-1 md:px-4 text-sm md:text-base bg-indigo-800 text-white rounded-md">Add Property</button>
+                        </div>
+                    </div>
+                    <ul class="space-y-2 text-gray-700 dark:text-gray-300 flex flex-col md:flex-row flex-wrap">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" for = 'email' class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            <input type="email" name="email" id="email" value="john.doe@example.com" disabled>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                            </svg>
+                            <input type="tel" name="telephone" id="telephone" value="+1 (555) 123-4567" disabled>
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-indigo-800 dark:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                            </svg>
+                            <input type="number" value="3917813861"disabled name="id-number">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <script>
+    // Toggle dark mode based on system preference
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+    }
+
+    // Add hover effect to skill tags
+    const skillTags = document.querySelectorAll('.bg-indigo-100');
+    skillTags.forEach(tag => {
+        tag.addEventListener('mouseover', () => {
+            tag.classList.remove('bg-indigo-100', 'text-indigo-800');
+            tag.classList.add('bg-blue-900', 'text-white');
+        });
+        tag.addEventListener('mouseout', () => {
+            tag.classList.remove('bg-blue-900', 'text-white');
+            tag.classList.add('bg-indigo-100', 'text-indigo-800');
+        });
+    });
+</script>    
+
+{% endblock content %}
