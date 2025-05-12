@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static  %}
+
+{% block title %}
+ Vesta Realty | Unpaid Invoices
+{% endblock title %}
+
+{% block content %}
+<h1 class="text-center font-bold text-2xl mt-2 font-serif">Unpaid Invoices</h1>
+    <div class="w-11/12 md:w-fit mx-auto shadow-md rounded-md pb-6 mt-6 overflow-x-auto">
+        <table class="table-auto w-full stripe order-column row-border display text-xs" id="records">
+            <thead class="bg-[#124E66]  text-white">
+                <tr>
+                    <td class="p-2">No</td>
+                    <th class="p-2">Tenant</th>
+                    <th class="p-2">Month</th>
+                    <th class="p-2">Rent</th>
+                    <th class="p-2">Water</th>
+                    <th class="p-2">Electricity</th>
+                    <th class="p-2">Balance c/d</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invoice in unpaid_invoices %}
+                    <tr>
+                        <td class="border p-2">{{forloop.counter}}</td>
+                        <td class="border p-2 font-semibold">{{invoice.tenant.name}}</td>
+                        <td class="border p-2 text-xs font-semibold">{{invoice.month}} </td>
+                        <td class="border p-2">Ksh{{invoice.rent}}</td>
+                        <td class="border p-2">Ksh{{invoice.water_bills}}</td>
+                        <td class="border p-2">Ksh{{invoice.electricity_bills}}</td>
+                        <td class="border p-2 text-xs font-semibold tracking-wide">Ksh: {{invoice.balance_carried_down}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<!-- Styles and scripts -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.tailwindcss.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+<script>
+     $(document).ready(function(){
+        
+     });
+</script>
+{% endblock content %}

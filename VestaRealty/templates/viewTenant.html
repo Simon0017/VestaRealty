@@ -7,17 +7,14 @@
 {% load static  %}
 
 {% block title %}
-Vesta Realty | Tenant Info
+Vesta Realty | Tenant Information
 {% endblock title %}
 
 {% block content %}
 
-    <div class="flex flex-col md:flex-row justify-between items-center my-6 mx-4">
-        <div class="w-full md:w-1/3 mb-4 md:mb-0">
-            <input type="text" placeholder="Search users..." class="w-full px-4 py-2 rounded-md border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
+    <div class="flex justify-start md:justify-end items-center my-6 mx-4 md:mx-12">
         <a href="/create_tenant" target="blank">
-              <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+              <button class="bg-[#0a3d62] text-white px-4 py-2 rounded-md hover:bg-[#7788b8] transition duration-300">
             Add New User
         </button>
         </a>
@@ -25,10 +22,10 @@ Vesta Realty | Tenant Info
     </div>
 
     <!-- User Table -->
-    <div class="overflow-x-auto bg-white rounded-lg shadow ">
-        <table class="w-full table-auto">
-            <thead>
-                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+    <div class="overflow-x-auto bg-white rounded-lg shadow w-11/12  mx-auto">
+        <table class="w-full table-auto stripe order-column row-border display" id = 'tenants_info'>
+            <thead class="bg-[#0a3d62] text-white">
+                <tr class="uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-left">ID</th>
                     <th class="py-3 px-6 text-left">Name</th>
                     <th class="py-3 px-6 text-left">ID no</th>
@@ -52,7 +49,7 @@ Vesta Realty | Tenant Info
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                   </svg>
                               </button>
-                              <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                              <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110" data-id="{{tenant.id_no}}">
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                   </svg>
@@ -70,4 +67,16 @@ Vesta Realty | Tenant Info
         </table>
     </div>
 
+
+    <!-- Styles and scripts -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.tailwindcss.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{% static 'js/view_tenant.js' %}"></script>
+
+    
 {% endblock content %}

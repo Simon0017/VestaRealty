@@ -25,10 +25,10 @@
             <input type="checkbox" id="menu-toggle" class="hidden peer">
 
             <!-- Sidebar -->
-            <div class="hidden peer-checked:flex md:flex flex-col w-64 bg-gray-800 transition-all duration-300 ease-in-out ">
-                <div class="flex items-center justify-between h-16 bg-gray-900 px-4">
-                    <img src="{% static 'img/logo.png' %}" class="w-14 aspect-square" alt="Logo">
+            <div class="hidden peer-checked:flex md:flex flex-col w-64 bg-[#2E3944] transition-all duration-300 ease-in-out ">
+                <div class="flex items-center justify-between h-16 bg-gray-900 px-3">
                     <span class="text-white font-bold uppercase">Vesta Realty</span>
+                    <img src="{% static 'img/logo.png' %}" class="w-14 aspect-square" alt="Logo">
                     <label for="menu-toggle" class="text-white cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 lg:hidden" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -39,7 +39,8 @@
                     <!-- <span class="text-white font-bold uppercase">Sidebar</span> -->
                 </div>
                 <div class="flex flex-col flex-1 overflow-y-auto">
-                    <nav class="flex-1 px-2 py-4 bg-gray-800">
+                    <nav class="flex-1 px-2 py-4 bg-gray-800 h-dvh">
+                        <!-- Dashboard -->
                         <a href="/dashboard" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700 group">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 group-hover:transform group-hover:rotate-90" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -47,19 +48,6 @@
                                     d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                             Dashboard
-                        </a>
-
-                        <!-- Login -->
-                        <a href="/login" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="group-hover:hidden h-6 w-6 mr-2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden group-hover:block h-6 w-6 mr-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                            </svg>						  
-                            Login
                         </a>
 
                         <!-- Tenants-->
@@ -161,19 +149,34 @@
                         </div>
                         
                         <!-- User Profile -->
-                        <a href="/user_profile" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700 group">
+                        <!-- <a href="/user_profile" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700 group">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>				  
                             User Profile
+                        </a> -->
+                        
+                        
+                        <!-- Login -->
+                        <a href="/login" class="flex items-center px-4 py-2 text-gray-100 hover:bg-gray-700 group mt-64">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="group-hover:hidden h-6 w-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden group-hover:block h-6 w-6 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>						  
+                            Login
                         </a>
+
                     </nav>
                 </div>
             </div>
 
             <!-- Main content -->
             <div class="flex flex-col flex-1 overflow-y-auto">
-                <div class="flex items-center justify-between h-16 bg-white border-b border-gray-200">
+                <div class="flex items-center justify-between h-16 bg-gray-900 text-white border-b border-gray-200 py-2">
                     <div class="flex items-center px-4">
                         <label for="menu-toggle"
                             class="md:hidden mr-4 bg-gray-800 text-white p-2 rounded focus:outline-none cursor-pointer">
@@ -186,11 +189,11 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>					  
-                        <input class="mx-4 w-full border rounded-md px-4 py-2" type="text" placeholder="Search">
+                        <input class="mx-4 w-full flex-grow border  rounded-md px-4 py-2" type="text" placeholder="Search">
                     </div>
                     <div class="flex items-center pr-4">
                         <button
-                            class="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700">
+                            class="flex items-center text-white hover:text-gray-300 focus:outline-none focus:text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -200,10 +203,7 @@
                     </div>
                 </div>
                 {% block content %}
-                    <div class="p-4">
-                        <h1 class="text-2xl font-bold">Welcome to my dashboard!</h1>
-                        <p class="mt-2 text-gray-600">This is an example dashboard using Tailwind CSS.</p>
-                    </div>
+
                 {% endblock content %}
             </div>
         </div>

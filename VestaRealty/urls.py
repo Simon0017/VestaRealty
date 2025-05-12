@@ -27,4 +27,10 @@ urlpatterns = [
     path('confirmation/', views.mpesa_confirmation, name='mpesa_confirmation'),
     path('validation/', views.mpesa_validation, name='mpesa_validation'),
     path('tenant_information/<int:tenant_id>',views.tenant_credentials,name = 'tenant_information'),
+    path('properties_records',views.property_records,name='properties_records'),
+    path('tenants_records',views.tenants_records,name = 'tenants_records'),
+    path('paid_invoices',views.paidInvoices,name='paid_invoices'),
+    path('unpaid_invoices',views.unpaid_invoices,name='unpaid_invoices'),
+    path('payment_records',views.payment_records,name='payment_records'),
+    path('delete-tenant/<int:tenant_id>/', views.delete_tenant, name='delete_tenant'),
 ]

@@ -3,7 +3,7 @@
 {% load static  %}
 
 {% block title %}
-Vesta Realty | Invoice {{Simon}}
+Vesta Realty | Invoice 
 {% endblock title %}
 
 {% block stylesheets %}
@@ -13,7 +13,7 @@ Vesta Realty | Invoice {{Simon}}
 {% block content %}
 
     <!-- component -->
-<div class="flex h-screen w-full items-center justify-center bg-gray-600">
+<div class="flex h-screen w-full items-center justify-center bg-[#D3D9D4]">
   <div class="w-80 rounded bg-gray-50 px-6 pt-8 shadow-lg" id="invoice">
     <div class="flex justify-end mx-2 hover:cursor-pointer no-print" title="print invoice" onclick="printDiv('invoice','invoice_{{tenant}}__{{month}}')">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 ">

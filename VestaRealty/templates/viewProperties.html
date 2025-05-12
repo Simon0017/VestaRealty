@@ -13,13 +13,13 @@ Vesta Realty | View Properties
 
     <div class="shadow-lg rounded-lg  overflow-x-auto mx-4 md:mx-10 mt-6">
         <table class="w-full table-auto">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">No</th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Name</th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Location</th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase">Tenants</th>
-                    <th class="w-1/4 py-4 px-6 text-left text-gray-600 font-bold uppercase ">Status</th>
+            <thead class="bg-[#0a3d62] text-white">
+                <tr class="">
+                    <th class="w-1/4 py-4 px-6 text-left font-bold uppercase">No</th>
+                    <th class="w-1/4 py-4 px-6 text-left font-bold uppercase">Name</th>
+                    <th class="w-1/4 py-4 px-6 text-left font-bold uppercase">Location</th>
+                    <th class="w-1/4 py-4 px-6 text-left font-bold uppercase">Tenants</th>
+                    <th class="w-1/4 py-4 px-6 text-left font-bold uppercase ">Status</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -29,7 +29,7 @@ Vesta Realty | View Properties
                         <td class="py-4 px-6 truncate overflow-hidden whitespace-nowrap text-ellipsis"> {{property.name}} </td>
                         <td class="py-4 px-6  truncate overflow-hidden whitespace-nowrap text-ellipsis">{{property.location}} </td>
                         <td class="py-4 px-6 "> 
-                            <span class="bg-green-600 rounded-full text-xs md:text-sm max-w-ws truncate  text-white px-3 py-1">
+                            <span class="bg-[#0a3d62] rounded-full text-xs md:text-sm max-w-ws truncate  text-white px-3 py-1">
                                 {{property.tenants}} Tenants
                             </span>
                         </td>

@@ -50,21 +50,21 @@ Vesta Realty | Rent Info | {{tenant.name}}
         <div>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKK6xibIHpmaTKm8ZGO5HtVbLYzKYs-C7YZQ&s" alt="Blank User"
             class="w-fit md:w-40 mx-auto aspect-square rounded-full shadow-lg">
-           <div class="flex items-start md:flex-row space-x-2 mt-4">
-                <div class="flex space-x-2">
+           <div class="flex items-start md:flex-row space-x-2 my-4">
+                <div class="flex items-end space-x-2">
                     <span class="font-bold">Name:</span>
                     <span class="text-sm"> {{tenant.name}} </span>
                 </div>
                 <div class="flex space-x-2">
                     <span class="font-bold">Location:</span>
-                    <span class="bg-gray-300 px-2 py-1 text-sm rounded-full hover:cursor-pointer">Lessos</span>
+                    <span class="bg-[#D3D9D4] px-2 py-1 text-sm rounded-full hover:cursor-pointer">Lessos</span>
                 </div>
            </div>
            <div class="flex space-x-4">
                 <span>
                     Rent:
                 </span>
-                <span class="leading-3 text-sm py-1 px-2 bg-emerald-400 rounded-full text-white">
+                <span class="leading-3 text-sm py-1 px-2 bg-[#124E66] rounded-full text-white">
                     {{tenant.Rent}}
                 </span>
                 
@@ -86,9 +86,9 @@ Vesta Realty | Rent Info | {{tenant.name}}
                         </span>
                         <span>
                             {% if rent.balance == 0 %}
-                                Bal: <span class="leading-3 text-sm py-1 px-2 bg-emerald-400 rounded-full">Paid in Full</span>
+                                Bal: <span class="leading-3 text-sm py-1 px-2 bg-[#124E66] text-white rounded-full">Paid in Full</span>
                             {% else %}
-                                Bal: <span class="leading-3 text-xs py-1 px-2 bg-emerald-400 rounded-full">Ksh: {{rent.balance}}</span>
+                                Bal: <span class="leading-3 text-xs py-1 px-2 bg-[#124E66] text-white rounded-full">Ksh: {{rent.balance}}</span>
                             {% endif %}
                         </span>
                     {% endfor %}
@@ -97,7 +97,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
                     <span class="font-semibold text-sm">
                         Total Balances: 
                     </span>
-                    <span class="leading-3 text-xs py-1 px-2 bg-emerald-400 rounded-full">
+                    <span class="leading-3 text-xs py-1 px-2 bg-[#124E66] text-white rounded-full">
                         Ksh: {{balance}}
                     </span>
                 </div>
@@ -107,7 +107,8 @@ Vesta Realty | Rent Info | {{tenant.name}}
         <div class="flex-grow">
             <form action="" method="post" id="form">
                 {% csrf_token %}
-                <h3 class="font-serif font-bold text-base md:text-2xl text-center shadow-sm mb-4">Update <span class="text-cyan-600">{{tenant.name}}'s</span> Payment Record</h3>
+                <h3 class="font-bold text-sm md:text-base text-center  mb-4">Update <span class="text-cyan-600">{{tenant.name}}'s</span> Payment Record</h3>
+                <hr>
                 <div class="flex flex-col md:flex-row space-x-0 md:space-x-3 mt-3" >
                     <div class="flex flex-col space-y-1">
                         <label for="month" class="font-semibold">Month:</label>
@@ -155,7 +156,7 @@ Vesta Realty | Rent Info | {{tenant.name}}
                 </div>
                 <textarea name="notes" id="notes" placeholder="Additional notes..." class="w-full mt-4 h-20 px-2 py-1 rounded-md border border-gray-300"></textarea>
                 <div class="flex justify-end mx-1 mt-3">
-                    <button type="submit" class="bg-emerald-500 text-white px-3 py-1 rounded-full">submit</button>
+                    <button type="submit" class="bg-[#124E66] text-white px-3 py-1 rounded-full">submit</button>
                 </div>
             </form>
         </div>

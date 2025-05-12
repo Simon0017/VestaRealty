@@ -48,7 +48,7 @@
         </div>
 
         <div class="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
-            <div class="text-2xl py-4 px-6 bg-gray-900 text-white text-center font-bold uppercase">
+            <div class="text-2xl py-4 px-6 bg-[#0a3d62] text-white text-center font-bold uppercase">
                 Create New Tenant
             </div>
             <form class="py-4 px-6" id="form">
@@ -82,7 +82,7 @@
                         Property
                     </label>
                     <select
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none bg-white border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="property" name="property">
                         {% for property in properties %}
                             <option value="{{property.name}}">{{property.name}} </option>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="flex items-center justify-center mb-4">
                     <button
-                        class="bg-gray-900 w-full text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+                        class="bg-[#0a3d62] w-full text-white py-2 px-4 rounded hover:bg-[#7788b8] focus:outline-none focus:shadow-outline"
                         type="submit">
                         Create
                     </button>

@@ -7,129 +7,135 @@
 {% endblock title %}
 
 {% block content %}
-
-    <div class="p-4">
-
-        <div class="grid grid-cols-1 md:grid-cols-2">
-
-            <!-- My Tenants -->
-            <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h2 class="text-2xl font-bold mb-4">My Tenants</h2>
-                <div class="overflow-x-auto text-sm">
-                    <table id="example" class="table-auto w-full stripe order-column row-border display">
-                        <thead>
-                            <tr>
-                                <td class="p-2">No</td>
-                                <th class="p-2">Name</th>
-                                <th class="p-2">Property</th>
-                                <th class="p-2">Balances</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for tenant in tenants %}
-                                <tr>
-                                    <td class="border p-2">{{forloop.counter}}</td>
-                                    <td class="border p-2 font-semibold">{{tenant.name}}</td>
-                                    <td class="border p-2">{{tenant.property}}</td>
-                                    <td class="border p-2 text-xs font-semibold">Ksh: {{tenant.balance}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-            <!-- Properties -->
-            <div class="col-span-1">
-                <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div class="flex flex-col md:flex-row justify-between mb-3">
-                        <h2 class="text-sm md:text-2xl font-bold mb-4">My Properties</h2>
-                        <span class="font-bold text-sm">Total Bal:  Ksh: {{total}} </span>
-                    </div>
-                    <div class="overflow-x-auto text-sm">
-                        <table id="example_2" class="table-auto w-full stripe order-column row-border display text-xs">
-                            <thead>
-                                <tr>
-                                    <th class="p-2">No</th>
-                                    <th class="p-2">Name</th>
-                                    <th class="p-2">Location</th>
-                                    <th class="p-2">No of tenants</th>
-                                    <th class="p-2">Balances</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for property in properties %}
-                                    <tr>
-                                        <td class="border p-2">{{forloop.counter}}</td>
-                                        <td class="border p-2 font-semibold">{{property.name}}</td>
-                                        <td class="border p-2">{{property.location}}</td>
-                                        <td class="border p-2">{{property.tenants}}</td>
-                                        <td class="border p-2 font-semibold">Ksh: {{property.balances}}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pyment records -->
-            <div class="container col-span-1 mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h2 class="text-2xl font-bold mb-4">Payment records</h2>
-                <div class="overflow-x-auto text-sm">
-                    <table id="example_3" class="table-auto w-full stripe order-column row-border display">
-                        <thead>
-                            <tr>
-                                <td class="p-2">No</td>
-                                <th class="p-2">Tenant</th>
-                                <th class="p-2">Month</th>
-                                <th class="p-2">Mpesa</th>
-                                <th class="p-2">Rent</th>
-                                <th class="p-2">Water</th>
-                                <th class="p-2">Electricity</th>
-                                <th class="p-2">Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for payment in payments %}
-                                <tr>
-                                    <td class="border p-2">{{forloop.counter}}</td>
-                                    <td class="border p-2 font-semibold">{{payment.tenant.name}}</td>
-                                    <td class="border p-2 text-xs font-semibold">{{payment.month}} </td>
-                                    <td class="border p-2">{{payment.mpesa_code}}</td>
-                                    <td class="border p-2">Ksh{{payment.rent}}</td>
-                                    <td class="border p-2">Ksh{{payment.water_bills}}</td>
-                                    <td class="border p-2">Ksh{{payment.electricity_bills}}</td>
-                                    <td class="border p-2 text-xs font-semibold tracking-wide">Ksh: {{payment.balance_carried_down}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-2">
+    <!-- Total Properties -->
+    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
         
+        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+            <div class="flex flex-col">
+                <div class="text-base md:text-xl">Total Properties</div>
+                <div class="">{{properties | length}} </div>
+            </div>
+            <div class="opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+                  </svg>                      
+            </div>
+        </div>
+
+        <div class="absolute bg-[#7788b8] text-white opacity-80 w-full bottom-0 flex space-x-1 md:space-x-2 px-4 py-2">
+            <a href="/properties_records" class="text-white ml-auto flex">
+                <span >View Details</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>  
+            </a>                
+        </div>
     </div>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.tailwindcss.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable({
-                // Add any customization options here
-            });
-            $('#example_2').DataTable({
-                // Add any customization options here
-            });
-            $('#example_3').DataTable({
-                // Add any customization options here
-            });
-        });
-    </script>
+    <!-- Total tenants -->
+    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+        
+        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+            <div class="flex flex-col">
+                <div class="text-base md:text-xl">Total Tenants</div>
+                <div class="">{{tenants | length}} </div>
+            </div>
+            <div class="opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                  </svg>
+                                        
+            </div>
+        </div>
 
+        <div class="absolute bg-[#7788b8] text-white opacity-80 w-full bottom-0 flex space-x-1 md:space-x-2 px-4 py-2">
+            <a href="/tenants_records" class="text-white ml-auto flex">
+                <span >View Details</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>  
+            </a>                
+        </div>
+    </div>
+
+    <!-- Paid Invoices -->
+    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+        
+        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+            <div class="flex flex-col">
+                <div class="text-base md:text-xl">Paid Invoices</div>
+                <div class="">{{payments | length}} </div>
+            </div>
+            <div class="opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                  </svg>
+                                       
+            </div>
+        </div>
+
+        <div class="absolute bg-[#7788b8] text-white opacity-80 w-full bottom-0 flex space-x-1 md:space-x-2 px-4 py-2">
+            <a href="/paid_invoices" class="text-white ml-auto flex">
+                <span >View Details</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>  
+            </a>                
+        </div>
+    </div>
+
+    <!-- Unpaid Invoices -->
+    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+        
+        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+            <div class="flex flex-col">
+                <div class="text-base md:text-xl">Unpaid Invoices</div>
+                <div class="">{{unpaid_invoices | length}} </div>
+            </div>
+            <div class="opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                  </svg>
+                                      
+            </div>
+        </div>
+
+        <div class="absolute bg-[#7788b8] text-white opacity-80 w-full bottom-0 flex space-x-1 md:space-x-2 px-4 py-2">
+            <a href="/unpaid_invoices" class="text-white ml-auto flex">
+                <span >View Details</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>  
+            </a>                
+        </div>
+    </div>
+
+    <!-- Payment Records -->
+    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+        
+        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+            <div class="flex flex-col">
+                <div class="text-base md:text-xl">Payment Records</div>
+                <div class="">{{payments | length}} </div>
+            </div>
+            <div class="opacity-70">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                  </svg>
+                  
+                                      
+            </div>
+        </div>
+
+        <div class="absolute bg-[#7788b8] text-white opacity-80 w-full bottom-0 flex space-x-1 md:space-x-2 px-4 py-2">
+            <a href="/payment_records" class="text-white ml-auto flex">
+                <span >View Details</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>  
+            </a>                
+        </div>
+    </div>
+</div>
 {% endblock content %}

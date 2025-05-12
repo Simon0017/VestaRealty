@@ -13,7 +13,11 @@ import secrets
 import re
 from datetime import timedelta
 from .mpesa import *
+from django.views.decorators.http import require_http_methods
+import logging
 
+# logging
+logger = logging.getLogger(__name__)
 
 # view for the base.html
 def base_view(request):
@@ -92,6 +96,41 @@ def user_registration(request):
 # view for the admin dashboard
 @login_required
 def dashboard(request):
+    # get the list of tenants associated with the landlord
+    tenants = list(request.user.tenants.all())
+
+    # get the properties
+    properties = list(request.user.owner.all())
+
+    # get the invoices paid record
+    paid_inv = []
+    tenants_ = list(request.user.tenants.all())
+    for tenant in tenants_:
+        tenants_paid_inv = list(tenant.paid_tenant.all())
+        for inv in tenants_paid_inv:
+            paid_inv.append(inv)
+
+     # get the invoices
+    all_invoices = list(request.user.landlord_invoice.all().order_by('-created_on'))
+    
+    # get the unpaid invoices
+    unpaid_invoices_ = []
+    for invoice in all_invoices:
+        check_instance = invoice.paid_invoice.first()
+        if not check_instance:
+            unpaid_invoices_.append(invoice)
+
+    
+    context = {
+        'tenants':tenants,
+        'properties':properties,
+        'payments':paid_inv,
+        'unpaid_invoices':unpaid_invoices_,
+    }
+    return render(request,'dashboard.html',context)
+
+# view for the properties Records 
+def property_records(request):
     tenants = list(request.user.tenants.all())
 
     tenants_information = []
@@ -117,7 +156,7 @@ def dashboard(request):
             'balance':balances
 
         })
-    
+
     
     # get the properties
     properties = list(request.user.owner.all())
@@ -136,11 +175,56 @@ def dashboard(request):
             'tenants': len(tenants),
             "balances":prop_balance,
         })
-    
+
+    # get the balance
     total_balance = 0
     for bal in modified_property:
         total_balance = total_balance + bal['balances']
     
+    # context
+    context = {
+        'properties':modified_property,
+        'total':total_balance,
+    }
+    return render(request,'properties_records.html',context)
+
+# view for the tenants records
+def tenants_records(request):
+    
+    tenants = list(request.user.tenants.all())
+
+    tenants_information = []
+    for tenant in tenants:
+        property = tenant.property_owned_set.all().values_list('name',flat  = True)
+        property = property[0]
+        balances = 0
+        balance = list(tenant.tenant_invoice.all())
+        '''Logic : if check the invoices if there exixt paid invoices if there is one chck for the balance in th epaid invoice 
+        if not take the invoice balaance'''
+        for bal in balance:  #bal here stands for the invoice instance
+            paid_invoice_instance = bal.paid_invoice.all().first()
+            if paid_invoice_instance is not None:
+                balances = balances + paid_invoice_instance.balance_carried_down
+            else:
+                bal_c_d = bal.balance_carried_down if bal.balance_carried_down else 0
+                amt = bal.rent + bal.water_bills + bal.electricity_bills + bal_c_d 
+                balances = balances + amt
+        tenants_information.append({
+            'id':tenant.id,
+            'name':tenant.name,
+            'property':property,
+            'balance':balances
+
+        })
+
+    # context
+    context = {
+        'tenants':tenants_information
+    }
+    return render(request,'tenants_records.html',context)
+
+# view for the paid Invoices
+def paidInvoices(request):
     # get the invoices paid record
     paid_inv = []
     tenants_ = list(request.user.tenants.all())
@@ -149,14 +233,40 @@ def dashboard(request):
         for inv in tenants_paid_inv:
             paid_inv.append(inv)
 
-    
     context = {
-        'tenants':tenants_information,
-        'properties':modified_property,
-        'total':total_balance,
         'payments':paid_inv
     }
-    return render(request,'dashboard.html',context)
+    return render(request,'paid_invoices.html',context)
+
+# view for the unpaid invoices
+def unpaid_invoices(request):
+    # get the invoices
+    all_invoices = list(request.user.landlord_invoice.all().order_by('-created_on'))
+    
+    # get the unpaid invoices
+    unpaid_invoices_ = []
+    for invoice in all_invoices:
+        check_instance = invoice.paid_invoice.first()
+        if not check_instance:
+            unpaid_invoices_.append(invoice)
+
+    context = {
+        'unpaid_invoices':unpaid_invoices_,
+    }
+
+    return render(request,'unpaid_invoices.html',context)
+
+# view for the payment records
+def payment_records(request):
+    # get the invoices paid record
+    paid_inv = []
+    tenants_ = list(request.user.tenants.all())
+    for tenant in tenants_:
+        tenants_paid_inv = list(tenant.paid_tenant.all())
+        for inv in tenants_paid_inv:
+            paid_inv.append(inv)
+
+    return render(request,'payment_records.html',{'payments':paid_inv})
 
 # view to create a new tenant
 @login_required
@@ -518,7 +628,7 @@ def user_profile(request):
 
 def checkOut(request):
     if request.method == "POST":
-        phone = request.POST.get("phone")  # e.g., 254712345678
+        phone = 3089765  #request.POST.get("phone")  # e.g., 254712345678
         amount = request.POST.get("amount")
         account_reference = f'Payment to landlord from {phone}'
 
@@ -559,3 +669,24 @@ def tenant_credentials(request,tenant_id):
         'tenant':tenant,
     }
     return render(request,'tenant_info.html',context)
+
+# view for the delete tenant
+@require_http_methods(['DELETE'])
+@csrf_exempt
+def delete_tenant(request,tenant_id):
+    print('request received')
+    try:
+        tenant  = Tenant.objects.get(id_no = tenant_id)
+        tenant.delete()
+        return JsonResponse({
+            'status':'success',
+        },status = 200)
+    except Tenant.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Tenant not found'}, status=404)
+    except Exception as e:
+        print('Error: ',e)
+        logger.error('Error: ',e)
+        return JsonResponse({
+            'status':'error',
+            'message':str(e),
+        },status = 500)
