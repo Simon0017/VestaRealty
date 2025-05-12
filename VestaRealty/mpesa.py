@@ -29,7 +29,7 @@ def stk_push(phone, amount, account_reference, callback_url,shortcode,transactio
         "Timestamp": timestamp,
         "TransactionType": transaction_type,
         "Amount": validate_amount(amount),
-        "PartyA": validate_possible_number(phone).as_e164[1:],
+        "PartyA": phone ,#validate_possible_number(phone,"Kenya").as_e164[1:],
         "PartyB": settings.MPESA_SHORTCODE,
         "PhoneNumber": phone,
         "CallBackURL": callback_url,

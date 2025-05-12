@@ -160,8 +160,8 @@ CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1',
 
 MPESA_CONSUMER_KEY = os.getenv('MPESA_CONSUMER_KEY')
 MPESA_CONSUMER_SECRET = os.getenv('MPESA_CONSUMER_SECRET')
-# MPESA_SHORTCODE = "your_shortcode"  # Paybill or Till number
-# MPESA_PASSKEY = "your_passkey"  # For STK Push
+MPESA_SHORTCODE = "174379"  # Paybill or Till number
+MPESA_PASSKEY = "jujg1g531ihih@"  # For STK Push
 MPESA_ENV = os.getenv("MPESA_ENV")  # Change to "production" when going live
 
 

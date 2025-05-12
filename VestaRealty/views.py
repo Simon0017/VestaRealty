@@ -628,14 +628,24 @@ def user_profile(request):
 
 def checkOut(request):
     if request.method == "POST":
-        phone = 3089765  #request.POST.get("phone")  # e.g., 254712345678
-        amount = request.POST.get("amount")
-        account_reference = f'Payment to landlord from {phone}'
+        try:
+            phone = '254744239458'  #request.POST.get("phone")  # e.g., 254712345678
+            amount = request.POST.get("amount_paying")
+            month = request.POST.get('month')
+            account_reference = f'Payment to landlord from {phone} for the month {month} amount: {amount}'
+            print(account_reference)
+            # return JsonResponse({
+            #     'status':'success',
+            # })
 
-        callback_url = "http://127.0.0.1:8000/mpesa_callback"
+            # callback_url = "http://127.0.0.1:8000/mpesa_callback"
+            callback_url = "https://9c67-105-160-52-17.ngrok-free.app/mpesa_callback"
 
-        response = stk_push(phone, amount, account_reference, callback_url)
-        return JsonResponse(response)
+            response = stk_push(phone, amount, account_reference, callback_url,'174379')
+            print(response)
+            return JsonResponse(response,safe=False)
+        except Exception as e:
+            logger.error(e)
      
     return render(request,'checkout_payment.html')
 
