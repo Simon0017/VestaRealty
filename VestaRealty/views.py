@@ -15,6 +15,7 @@ from datetime import timedelta
 from .mpesa import *
 from django.views.decorators.http import require_http_methods
 import logging
+import uuid
 
 # logging
 logger = logging.getLogger(__name__)
@@ -296,6 +297,7 @@ def create_tenant(request):
                 date_joined = date,
                 notes = notes,
                 created_at = timezone.now(),
+                password = uuid.uuid4(),
             )
 
             data.save()
