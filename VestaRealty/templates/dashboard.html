@@ -9,15 +9,15 @@
 {% block content %}
 <div class="grid grid-cols-2 md:grid-cols-4 gap-2 p-2">
     <!-- Total Properties -->
-    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+    <div class="bg-[#0a3d62] text-white w-full aspect-video pb-6 rounded-md relative">
         
-        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+        <div class="flex text-gray-200 text-base md:text-2xl items-center justify-between p-5 font-serif">
             <div class="flex flex-col">
                 <div class="text-base md:text-xl">Total Properties</div>
                 <div class="">{{properties | length}} </div>
             </div>
             <div class="opacity-70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 md:size-10">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
                   </svg>                      
             </div>
@@ -34,9 +34,9 @@
     </div>
 
     <!-- Total tenants -->
-    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+    <div class="bg-[#0a3d62] text-white w-full aspect-video pb-6 rounded-md relative">
         
-        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+        <div class="flex text-gray-200 text-base md:text-2xl items-center justify-between p-5 font-serif">
             <div class="flex flex-col">
                 <div class="text-base md:text-xl">Total Tenants</div>
                 <div class="">{{tenants | length}} </div>
@@ -60,9 +60,9 @@
     </div>
 
     <!-- Paid Invoices -->
-    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+    <div class="bg-[#0a3d62] text-white w-full aspect-video pb-6 rounded-md relative">
         
-        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+        <div class="flex text-gray-200 text-base md:text-2xl items-center justify-between p-5 font-serif">
             <div class="flex flex-col">
                 <div class="text-base md:text-xl">Paid Invoices</div>
                 <div class="">{{payments | length}} </div>
@@ -86,9 +86,9 @@
     </div>
 
     <!-- Unpaid Invoices -->
-    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+    <div class="bg-[#0a3d62] text-white w-full aspect-video pb-6 rounded-md relative">
         
-        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+        <div class="flex text-gray-200 text-base md:text-2xl items-center justify-between p-5 font-serif">
             <div class="flex flex-col">
                 <div class="text-base md:text-xl">Unpaid Invoices</div>
                 <div class="">{{unpaid_invoices | length}} </div>
@@ -112,9 +112,9 @@
     </div>
 
     <!-- Payment Records -->
-    <div class="bg-[#0a3d62] text-white w-full aspect-video rounded-md relative">
+    <div class="bg-[#0a3d62] text-white w-full aspect-video pb-6 rounded-md relative">
         
-        <div class="flex text-gray-200 text-2xl items-center justify-between p-5 font-serif">
+        <div class="flex text-gray-200 text-base md:text-2xl items-center justify-between p-5 font-serif">
             <div class="flex flex-col">
                 <div class="text-base md:text-xl">Payment Records</div>
                 <div class="">{{payments | length}} </div>
